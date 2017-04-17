@@ -1,0 +1,6 @@
+c:\users\adam_\onedrive\documents\visual studio 2015\Projects\ChessMaster\ChessMaster\bin\Debug\ChessMaster.exe.config
+c:\users\adam_\onedrive\documents\visual studio 2015\Projects\ChessMaster\ChessMaster\bin\Debug\ChessMaster.exe
+c:\users\adam_\onedrive\documents\visual studio 2015\Projects\ChessMaster\ChessMaster\bin\Debug\ChessMaster.pdb
+c:\users\adam_\onedrive\documents\visual studio 2015\Projects\ChessMaster\ChessMaster\obj\Debug\ChessMaster.csprojResolveAssemblyReference.cache
+c:\users\adam_\onedrive\documents\visual studio 2015\Projects\ChessMaster\ChessMaster\obj\Debug\ChessMaster.exe
+c:\users\adam_\onedrive\documents\visual studio 2015\Projects\ChessMaster\ChessMaster\obj\Debug\ChessMaster.pdb
