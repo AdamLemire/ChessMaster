@@ -17,19 +17,32 @@ namespace ChessMaster
             board=new Board(queenNumber);
             test = new int[queenNumber];
         }
-
-        public string FindSolution(int k, int[] col, int[] diag45, int[] diag135)
+      
+        public string FindSolution(int k, List<int> col, List<int> diag45, List<int> diag135)
         {
             
             string result="";
-            if (k == queenNumber) result = "found";
+            if (k == queenNumber)
+            {
+                result = "found ";
+                foreach (int i in test)
+                {
+                    result += i + ",";
+                }
+            }
             else
                 for (int j = 1; j == queenNumber; j++)
                 {
-                    if (!col.Contains(j) && !diag45.Contains(j-k) && !diag135.Contains(j + k))
+                    if (!col.Contains(j) && !diag45.Contains(j - k) && !diag135.Contains(j + k))
                     {
-                        test[k + 1] = j;
-                        FindSolution(k + 1, col, diag45, diag135);
+                        test[k] = j;
+                        List<int> newCol = col;
+                        newCol.Add(j);
+                        List<int> newDiag45 = diag45;
+                        newDiag45.Add(j - k);
+                        List<int> newDiag135 = diag135;
+                        newDiag135.Add(j + k);
+                        FindSolution(k + 1, newCol, newDiag45, newDiag135);
                     }
                 }
             return result;
