@@ -4,3 +4,9 @@ c:\users\adam_\onedrive\documents\visual studio 2015\Projects\ChessMaster\ChessM
 c:\users\adam_\onedrive\documents\visual studio 2015\Projects\ChessMaster\ChessMaster\obj\Debug\ChessMaster.csprojResolveAssemblyReference.cache
 c:\users\adam_\onedrive\documents\visual studio 2015\Projects\ChessMaster\ChessMaster\obj\Debug\ChessMaster.exe
 c:\users\adam_\onedrive\documents\visual studio 2015\Projects\ChessMaster\ChessMaster\obj\Debug\ChessMaster.pdb
+C:\Users\adam_\Repositories\ChessMaster\ChessMaster\bin\Debug\ChessMaster.exe.config
+C:\Users\adam_\Repositories\ChessMaster\ChessMaster\obj\Debug\ChessMaster.exe
+C:\Users\adam_\Repositories\ChessMaster\ChessMaster\obj\Debug\ChessMaster.pdb
+C:\Users\adam_\Repositories\ChessMaster\ChessMaster\bin\Debug\ChessMaster.exe
+C:\Users\adam_\Repositories\ChessMaster\ChessMaster\bin\Debug\ChessMaster.pdb
+C:\Users\adam_\Repositories\ChessMaster\ChessMaster\obj\Debug\ChessMaster.csprojResolveAssemblyReference.cache
