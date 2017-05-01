@@ -26,7 +26,7 @@ namespace ChessMaster
         public override string ToString()
         {
             if (validSolution == null)
-                return "aucune solution passée en parametre";
+                return "No solution found";
 
             string ulCorner = "╔";
             string llCorner = "╚";
@@ -41,7 +41,7 @@ namespace ChessMaster
 
             int numbersLeft = queenNumber;
 
-            string espace = "  ";
+            string espace = " ";
 
             //ligne du haut
             topHorizontalLine = ulCorner;
@@ -50,23 +50,23 @@ namespace ChessMaster
             {
                 if (numbersLeft == 1)
                 {
-                    topHorizontalLine += horizontal + horizontal + horizontal + horizontal + horizontal + horizontal + urCorner;
+                    topHorizontalLine += horizontal + horizontal + horizontal + horizontal + urCorner;
                 }
-                else topHorizontalLine += horizontal + horizontal + horizontal + horizontal + horizontal + horizontal + horizontal;
+                else topHorizontalLine += horizontal + horizontal + horizontal + horizontal + horizontal;
                 numbersLeft--;
             }
 
             //ligne du bas
-            string bottomLine = "\n" +llCorner;
+            string bottomLine = "\n" + llCorner;
             numbersLeft = queenNumber;
 
             while (numbersLeft > 0)
             {
                 if (numbersLeft == 1)
                 {
-                    bottomLine += horizontal + horizontal + horizontal + horizontal + horizontal + horizontal + lrCorner;
+                    bottomLine += horizontal + horizontal + horizontal + horizontal + lrCorner;
                 }
-                else bottomLine += horizontal + horizontal + horizontal + horizontal + horizontal + horizontal + horizontal;
+                else bottomLine += horizontal + horizontal + horizontal + horizontal + horizontal;
                 numbersLeft--;
             }
 
@@ -80,7 +80,7 @@ namespace ChessMaster
                     cases += "\n" + vertical;
                     while (numberSquareLeft > 0 && line != 0)
                     {
-                        cases += horizontal + horizontal + horizontal + horizontal + horizontal + horizontal + vertical;
+                        cases += horizontal + horizontal + horizontal + horizontal + vertical;
                         numberSquareLeft--;
                     }
                 }
@@ -91,15 +91,13 @@ namespace ChessMaster
                 {
                     if (validSolution[line] - 1 == casePosition)
                     {
-                        cases += espace + "X " + espace + vertical;
+                        cases += espace + " X" + espace + vertical;
                     }
-                    else cases += espace + espace + espace + vertical;
+                    else cases += espace + espace + espace + espace + vertical;
                     numberSquareLeft--;
                     casePosition++;
                 }
             }
-
-
             return (topHorizontalLine + cases + bottomLine);
         }
     }

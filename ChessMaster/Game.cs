@@ -11,43 +11,49 @@ namespace ChessMaster
         private int queenNumber;
         public Board Boardgame { get; }
         public int[] Test { get; }
-        //private bool found = false;
         public List<List<int>> Results { get; }
+        public List<List<int>> KTupleList { get; }
         private int resultsCount = 0;
+        private int[] kTupleCount;
 
         public Game(int queenNumber)
         {
             this.queenNumber = queenNumber;
             Boardgame = new Board(queenNumber);
             Test = new int[queenNumber];
+            kTupleCount = new int[queenNumber];
             Results = new List<List<int>>();
+            KTupleList = new List<List<int>>();
         }
 
         public void ClearOldRequest()
         {
+            kTupleCount = new int[queenNumber];
             resultsCount = 0;
             Results.Clear();
         }
 
+        //pour trouver la première solution
         public bool FindSolution()
         {
             ClearOldRequest();
             bool found = false;
-                for (int j = 1; j < queenNumber + 1; j++)
-                {
-                    for (int m = 1; m < queenNumber; m++)
-                        Test[m] = 0;
-                    Test[0] = j;
-                    List<int> col = new List<int>();
-                    List<int> diag45 = new List<int>();
-                    List<int> diag135 = new List<int>();
-                    col.Add(Test[0]);
-                    diag45.Add(Test[0]);
-                    diag135.Add(Test[0]);
-                    //Console.WriteLine("k[0] = " + Test[0]);
-                    found = FindSolution(1, col, diag45, diag135);
-                    if (found) return true;
-                }
+            for (int j = 1; j < queenNumber + 1; j++)
+            {
+                for (int m = 1; m < queenNumber; m++)
+                    Test[m] = 0;
+                Test[0] = j;
+
+                List<int> col = new List<int>();
+                List<int> diag45 = new List<int>();
+                List<int> diag135 = new List<int>();
+                col.Add(Test[0]);
+                diag45.Add(Test[0]);
+                diag135.Add(Test[0]);
+                kTupleCount[0]++;
+                found = FindSolution(1, col, diag45, diag135);
+                if (found) return true;
+            }
 
             return false;
         }
@@ -64,6 +70,7 @@ namespace ChessMaster
                 }
                 Results.Add(testTmp);
                 resultsCount++;
+
                 found = true;
             }
             else
@@ -76,6 +83,7 @@ namespace ChessMaster
                     if (!inputCol.Contains(j) && !inputDiag45.Contains(j - k) && !inputDiag135.Contains(j + k))
                     {
                         Test[k] = j;
+                        kTupleCount[k]++;
                         List<int> col = new List<int>();
                         foreach (int val in inputCol)
                         {
@@ -94,17 +102,16 @@ namespace ChessMaster
                             diag135.Add(val);
                         }
                         diag135.Add(j + k);
-                        //Console.WriteLine("next, marche à k= " + k + " j= " + j);
 
                         found = FindSolution(k + 1, col, diag45, diag135);
                         if (found) return true;
                     }
-                    //else Console.WriteLine("bloqué à k= "+k+" j= "+j);
                 }
             }
             return found;
         }
 
+        //pour trouver toutes les solutions
         public void FindMultipleSolutions()
         {
             ClearOldRequest();
@@ -119,7 +126,7 @@ namespace ChessMaster
                 col.Add(Test[0]);
                 diag45.Add(Test[0]);
                 diag135.Add(Test[0]);
-                //Console.WriteLine("k[0] = " + Test[0]);
+                kTupleCount[0]++;
                 FindMultipleSolutions(1, col, diag45, diag135);
             }
         }
@@ -134,6 +141,12 @@ namespace ChessMaster
                     testTmp.Add(val);
                 }
                 Results.Add(testTmp);
+                List<int> kTupleTmp = new List<int>();
+                foreach (int val in kTupleCount)
+                {
+                    kTupleTmp.Add(val);
+                }
+                KTupleList.Add(kTupleTmp);
                 resultsCount++;
             }
             else
@@ -145,6 +158,7 @@ namespace ChessMaster
 
                     if (!inputCol.Contains(j) && !inputDiag45.Contains(j - k) && !inputDiag135.Contains(j + k))
                     {
+                        kTupleCount[k]++;
                         Test[k] = j;
                         List<int> col = new List<int>();
                         foreach (int val in inputCol)
@@ -164,16 +178,13 @@ namespace ChessMaster
                             diag135.Add(val);
                         }
                         diag135.Add(j + k);
-                        //Console.WriteLine("next, marche à k= " + k + " j= " + j);
-
                         FindMultipleSolutions(k + 1, col, diag45, diag135);
                     }
-                    //else Console.WriteLine("bloqué à k= "+k+" j= "+j);
                 }
             }
         }
 
-
+        //retourne le nombre de solutions trouvées
         public string resultsString()
         {
             string result = "";
@@ -186,9 +197,42 @@ namespace ChessMaster
             return result + "count = " + resultsCount;
         }
 
-        public override string ToString()
+        public string validCountString()
         {
-            return ("\n");
+            return "Number of possible solutions for " + queenNumber + " queens = " + resultsCount + "  <-----";
+        }
+
+        //retourne le nombre de k-tuples prometteurs pour l'ensemble du tableau
+        public string kTupleCountString()
+        {
+            string kCountString = "";
+            int totalTupleCount = 0;
+            for (int i = 0; i < kTupleCount.Length; i++)
+            {
+                kCountString += "Number of promising " + (i + 1) + "-tuple = " + kTupleCount[i] + "\n";
+                totalTupleCount += kTupleCount[i];
+            }
+            kCountString += "Total number of promising k-tuple, including found solutions = " + totalTupleCount;
+            return kCountString;
+        }
+
+        //retourne le nombre de k-tuples prometteurs, du départ jusqu'à la solution choisie, incluant les solutions trouvées
+        public string kTupleCountCumulativeString(int solution)
+        {
+            string kCountString = "";
+            int totalTupleCount = 0;
+            List<int> kTupleTmp = new List<int>();
+            foreach (int val in KTupleList[solution - 1])
+            {
+                kTupleTmp.Add(val);
+            }
+            for (int i = 0; i < kTupleTmp.Count; i++)
+            {
+                kCountString += "Number of promising " + (i + 1) + "-tuple = " + kTupleTmp[i] + "\n";
+                totalTupleCount += kTupleTmp[i];
+            }
+            kCountString += "Total number of promising k-tuple = " + totalTupleCount;
+            return kCountString;
         }
     }
 }
